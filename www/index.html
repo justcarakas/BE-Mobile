@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>An Ubuntu HTML5 application</title>
+    <meta name="description" content="An Ubuntu HTML5 application">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <!--
+         Application stylesheets
+         Include your own stylesheets below to style your application.
+      -->
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+    <!-- 
+        Ubuntu UI javascript imports - Ambiance theme
+        Ubuntu provides building blocks that you can use in your application. For more information, you can check out the documentation at http://design.ubuntu.com/apps.
+     -->
+    <!-- Ubuntu UI Style imports - Ambiance theme -->
+    <link href="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/list.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/core.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/buttons.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/dialogs.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/page.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/pagestacks.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/toolbars.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/option-selector.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/app_functions.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/mobiscroll.core.js"></script>
+    <script src="js/mobiscroll.scroller.js"></script>
+    <script src="js/mobiscroll.datetime.js"></script>
+    <script src="js/mobiscroll.scroller.android-ics.js"></script>
+    <script src="js/i18n/mobiscroll.i18n.nl.js"></script>
+    <script src="js/twitter.js"></script>
+    <script src="js/i18n/app.i18n.js"></script>
+    <script src="js/i18n/i18next-1.7.2.js"></script>
+    <!-- own style -->
+    <link href="css/app.css" rel="stylesheet" type="text/css" />
+    <link href="css/datetime.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    
+    <div data-role="mainview">
+
+        <header data-role="header" id="appHeader">
+        </header>
+
+        <div data-role="content">
+            <div data-role="pagestack" id="langContext">
+                <!-- The application main page -->
+                <div data-role="page" id="search-page" data-title="BE Mobile">
+                    <section data-role="list" class="group">
+                        <header class="large-font" data-i18n="general.traject"  >
+                        </header>
+                        <ul data-role="listview" id="pathLocations" >
+                            <li>
+                                <aside>
+                                    <img alt="placeholder" id="fromLogo" src="icons/noService@8.png">
+                                </aside>
+                                <p class="clearIcon">
+                                    <label for="from" data-i18n="general.from"></label>
+                                    <input data-lat="" data-lng="" data-location="" data-service="" type="search" id="from"></input>
+                                </p>
+                            </li>
+                            <li>
+                                <aside>
+                                    <img alt="placeholder" id="toLogo" src="icons/noService@8.png">
+                                </aside>
+                                <p class="clearIcon">
+                                    <label for="to" data-i18n="general.to"></label>
+                                    <input data-lat="" data-lng="" data-location="" data-service="" type="search" id="to"></input>
+                                </p>
+                            </li>
+                            <!--
+                            Not suported yet
+                            <li>
+                                <aside>
+                                    <img alt="placeholder" id="viaLogo" src="icons/noService@8.png">
+                                </aside>
+                                <p class="clearIcon">
+                                    <label for="via" data-i18n="general.via"></label>
+                                    <input data-lat="" data-lng="" data-location="" data-service="" type="search" id="via"></input>
+                                </p>
+                            </li>
+                            -->
+                        </ul>
+                    </section>
+                    <div class="group">
+                        <button data-role="button" data-i18n="general.next" id="timeanddate"></button>
+                    </div>
+                    <div class="group">
+                        <input type="time" />
+                        <section data-role="list">
+                            <header class="large-font" data-i18n="general.travelWith"></header>
+                            <ul id="serviceProviders" data-role="listview">
+                                <li>
+                                    <aside><img alt="logo" src="icons/nmbs@8.png"></aside>
+                                    <p data-i18n="service.nmbs"></p>
+                                    <label>
+                                        <input type="checkbox" data-type="switch" checked="checked" id="NMBS">
+                                        <span class="toggle">
+                                            <span class="toggle-handle"></span>
+                                            <span class="toggle-bg"></span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <aside><img alt="logo" src="icons/delijn@8.png"></aside>
+                                    <p data-i18n="service.deLijn"></p>
+                                    <label>
+                                        <input type="checkbox" data-type="switch" checked="checked" id="DeLijn">
+                                        <span class="toggle">
+                                            <span class="toggle-handle"></span>
+                                            <span class="toggle-bg"></span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <aside><img alt="logo" src="icons/mivb@8.png"></aside>
+                                    <p data-i18n="service.mivb"></p>
+                                    <label>
+                                        <input type="checkbox" data-type="switch" checked="checked" id="MIVB">
+                                        <span class="toggle">
+                                            <span class="toggle-handle"></span>
+                                            <span class="toggle-bg"></span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <aside><img alt="logo" src="icons/tec@8.png"></aside>
+                                    <p data-i18n="service.tec"></p>
+                                    <label>
+                                        <input type="checkbox" data-type="switch" checked="checked" id="TEC">
+                                        <span class="toggle">
+                                            <span class="toggle-handle"></span>
+                                            <span class="toggle-bg"></span>
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <footer data-role="footer">
+                        <nav>
+                            <ul>
+                                <li><a href="#" data-role="languageSelection" id="twitterLink"><img src="../icons/twitter.png" class="icon" alt="Twitter"><span>Twitter</span></a></li>
+                                <li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+                <!-- The location search page -->
+                <div data-role="page" id="location-page" data-title="Search location">
+                     <div class="group clearIconSmall">
+                        <input type="search" id="location"></input><span onclick="var input = this.previousSibling; input.value = '';showHistory(); "></span>
+                    </div>
+                    <section data-role="list" id="locations" class="group locationsList">
+                    </section>
+                    <section data-role="list" id="locationsHistory" class="group locationsList">
+                    </section>
+                    <footer data-role="footer">
+                        <nav>
+                            <ul>
+                                <li><a href="#" data-role="languageSelection" id="twitterLink"><img src="../icons/twitter.png" class="icon" alt="Twitter"><span>Twitter</span></a></li>
+                                <li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+                <!-- Arrival and departur page -->
+                <div data-role="page" id="datetime-page" data-title="Departure / Arrival">
+                    <div class="group">
+                        <section data-role="option-selector" id="timeWhen">
+                          <ul>
+                            <li class="active" data-value="depart">
+                              <p data-i18n="general.departure"></p>
+                            </li>
+                            <li data-value="arrive">
+                              <p data-i18n="general.arrival"></p>
+                            </li>
+                          </ul>
+                        </section>
+                    </div>
+                    <div class="group">
+                        <p>
+                            <label for="datefield" data-i18n="general.date"></label>
+                            <input type="text" id="datefield" name="datefield" class="scroller-date">
+                        </p>
+                    </div>
+                    <div class="group">
+                        <p>
+                            <label for="timefield" data-i18n="general.time"></label>
+                            <input type="text" id="timefield" name="timefield" class="scroller-time">
+                        </p>
+                    </div>
+                    <div class="group">
+                        <button data-role="button" id="lookup" data-i18n="general.calculateRoute"></button>
+                    </div>
+                    <footer data-role="footer">
+                        <nav>
+                            <ul>
+                                <li><a href="#" data-role="languageSelection" id="twitterLink"><img src="../icons/twitter.png" class="icon" alt="Twitter"><span>Twitter</span></a></li>
+                                <li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+
+                <!-- The results page -->
+                <div data-role="page" id="results-page" data-title="Results">
+                    <section data-role="list" class="group">
+                        <header data-i18n="general.routes"></header>
+                        <ul data-role="listview" id="resultsList" >
+
+                        </ul>
+                    </section>
+                    <footer data-role="footer">
+                        <nav>
+                            <ul>
+                                <li><a href="#" data-role="languageSelection" id="twitterLink"><img src="../icons/twitter.png" class="icon" alt="Twitter"><span>Twitter</span></a></li>
+                                <li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+
+                <!-- The route detail page -->
+                <div data-role="page" id="routeDetail-page" data-title="Route detail">
+                    <section data-role="list" class="group">
+                        <ul data-role="listview" id="routeDetailList" >
+
+                        </ul>
+                    </section>
+                    <footer data-role="footer">
+                        <nav>
+                            <ul>
+                                <li><a href="#" data-role="languageSelection" id="twitterLink"><img src="../icons/twitter.png" class="icon" alt="Twitter"><span>Twitter</span></a></li>
+                                <li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li>
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+                <!-- twitter page -->
+                <div data-role="page" id="twitter-page" data-title="Twitter">
+                    <section data-role="list" class="group">
+                        <header class="large-font" data-i18n="general.twitterFeed"></header>
+                        <ul data-role="listview" id="twitterFeed" >
+                        </ul>
+                    </section>
+                    <div class="group">
+                        <button data-role="button" id="twitterRefresh" data-i18n="general.refresh"></button>
+                    </div>
+                    <footer data-role="footer"><nav><ul><li><a href="#" data-role="languageSelection" id="languageSelection" class="languageLink"><img src="/usr/share/icons/suru/actions/scalable/language-chooser.svg" class="icon" alt="Select Language"><span data-i18n="general.language"></span></a></li></ul></nav></footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="dialog" id="languageDialog">
+    </div>
+    <div data-role="dialog" id="errorDialog">
+            <section>
+                <h1 data-i18n="general.error"></h1>
+                <ul id="errMsg"></ul>
+                <menu>
+                    <button data-role="button" id="errOk" data-i18n="general.ok">OK</button>
+                </menu>
+            </section>
+        </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
+

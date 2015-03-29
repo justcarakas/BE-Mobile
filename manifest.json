@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.justcarakas.bemobile",
+    "description": "App for Belgian public transport",
+    "architecture": "all",
+    "title": "BE Mobile",
+    "hooks": {
+        "BEMobile": {
+            "apparmor": "BEMobile.apparmor",
+            "desktop": "BEMobile.desktop"
+        }
+    },
+    "version": "2.1.2",
+    "maintainer": "Jelmer Prins <justcarakas@carakas.be>",
+    "framework": "ubuntu-sdk-14.10"
+}

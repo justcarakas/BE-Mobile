@@ -1,0 +1,145 @@
+html{
+    height: 100%;
+}
+.group {
+    margin: 1em 1em 0 1em;
+}
+.group p {
+    display: -webkit-flex !important;
+    display: flex !important;
+}
+.group p label {
+    min-width: 4em;
+    line-height: 2rem;
+}
+.group p input {
+    -webkit-flex: 1;
+    flex: 1;
+    min-width: 4em;
+}
+.group p output {
+    margin-left: 1em;
+    min-width: 4em;
+}
+.clearIcon,
+.clearIconSmall{
+    position: relative;
+}
+.clearIconSmall input {
+    padding-right: 2em;
+    width: 100%;
+}
+.clearIcon input {
+    padding-right: 2.5em;
+}
+#locations a {
+    padding: 0;
+}
+[data-role="list"] ul li.routeOptions li{
+    padding-left: 0;
+}
+[data-role="list"] ul li.routeOptions a{
+    display: -webkit-flex !important;
+    display: flex !important;
+    line-height: 1rem;
+    padding-left: 0;
+}
+[data-role="list"] ul li.routeHeader {
+    height:auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+[data-role="list"] ul li.routeHeader strong {
+    text-align: center;
+    display:block;
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+}
+[data-role="list"] ul li.routeOptions div {
+    -webkit-flex: 1;
+    flex: 1;
+}
+[data-role="list"] ul li.routeOptions span.arrow:after {
+    width: 3rem;
+    content: '»';
+    font-size: 3rem;
+    line-height: 3rem;
+    margin: 0 1rem;
+    color:  #dd4814;
+}
+[data-role="list"] ul li.routeOptions div strong {
+    text-align: center;
+    display:block;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color:  #dd4814;
+}
+[data-role="list"] ul li.routeOptions div span {
+    text-align: center;
+    display: block;
+}
+
+[data-role="list"] ul#routeDetailList li{
+    height:auto;
+}
+[data-role="list"] ul#routeDetailList li p {
+    white-space: normal;
+    line-height:1.5rem;
+    color: #555;
+}
+[data-role="list"] ul#twitterFeed {
+
+}
+[data-role="list"] ul#twitterFeed li {
+    min-height: 60px;
+    height:auto;
+}
+[data-role="list"] ul#twitterFeed li aside {
+    margin-top: 0.5rem;
+}
+[data-role="list"] ul#twitterFeed li p {
+    white-space: normal;
+    line-height:1.5rem;
+    display: block !important;
+}
+
+[data-role="list"] ul#twitterFeed li p strong{
+    color: #dd4814;
+}
+#ttwitterRefresh {
+    margin-bottom:5rem;
+}
+.selectLanguage {
+    width: 90%;
+    display: block;
+    margin: 2% auto;
+}
+[data-role="footer"] nav ul li a#languageSelection img,
+[data-role="footer"] nav ul li a#twitterLink img{
+    width: 26px;
+    height: 26px;
+}
+[data-role="footer"] nav ul li a#languageSelection span,
+[data-role="footer"] nav ul li a#twitterLink span{
+    font-size: 0.8rem;
+}
+/* Tablet */
+@media only screen and (min-width: 870px){
+    [data-role="page"] {
+        width: 49%;
+        float: left;
+    }
+    [data-role="footer"] nav ul li a#twitterLink {
+        display: none;
+    }
+    #twitter-page {
+        display: block !important;
+        width: 49%;
+        float: right;
+        overflow-y: auto;
+        height: 100%;
+    }
+    #twitterLink {
+        display: none !important;
+    }
+}
