@@ -9,7 +9,7 @@
             "desktop": "BEMobile.desktop"
         }
     },
-    "version": "2.1.2",
+    "version": "2.1.3",
     "maintainer": "Jelmer Prins <justcarakas@carakas.be>",
     "framework": "ubuntu-sdk-14.10"
 }
