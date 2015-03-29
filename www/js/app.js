@@ -116,6 +116,7 @@ $( document ).ready(function() {
     var currDate = new Date();
     var opt = {
         "date": {
+            animate: false,
             preset: "date",
             dateOrder: "D dmmyy",
             mode: "scroller",
@@ -125,6 +126,7 @@ $( document ).ready(function() {
             minDate: currDate,
         },
         "time": {
+            animate: false,
             preset: "time",
             mode: "scroller",
             display: "bottom",
@@ -134,8 +136,8 @@ $( document ).ready(function() {
         }
     }
 
-    $(".scroller-date").scroller("destroy").scroller(opt["date"]);
-    $(".scroller-time").scroller("destroy").scroller(opt["time"]);
+    $(".scroller-date").scroller("destroy").scroller(opt["date"]).scroller('setValue', 'now', true);
+    $(".scroller-time").scroller("destroy").scroller(opt["time"]).scroller('setValue', new Date().getTime(), true);
 
     $("#timeanddate").on(
         "click",

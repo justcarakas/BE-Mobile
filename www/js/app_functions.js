@@ -529,6 +529,7 @@ function languageSelection(){
 function initLanguage(){
     scrollOpt = {
         "date": {
+            animate: false,
             preset: "date",
             dateOrder: "D dmmyy",
             mode: "scroller",
@@ -538,6 +539,7 @@ function initLanguage(){
             minDate: currDate,
         },
         "time": {
+            animate: false,
             preset: "time",
             mode: "scroller",
             display: "bottom",
@@ -547,8 +549,8 @@ function initLanguage(){
         }
     }
 
-    $(".scroller-date").scroller("destroy").scroller(scrollOpt["date"]);
-    $(".scroller-time").scroller("destroy").scroller(scrollOpt["time"]);
+    $(".scroller-date").scroller("destroy").scroller(scrollOpt["date"]).scroller('setValue', 'now', true);
+    $(".scroller-time").scroller("destroy").scroller(scrollOpt["time"]).scroller('setValue', new Date().getTime(), true);
 
     language = config['language'];
     languageNMBS = config['languageNMBS'];
