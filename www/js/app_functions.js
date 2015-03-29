@@ -1,15 +1,15 @@
-String.prototype.replaceAll = function (find, replace) {
+String.prototype.replaceAll = function(find, replace) {
     var str = this;
     return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 };
 
-function addRecent(service, id, value, location, lat, lng){
+function addRecent(service, id, value, location, lat, lng) {
     var key = service + '_' + location;
     var obj = {
         "key": key,
-        "service":service,
-        "id":id,
-        "value":value,
+        "service": service,
+        "id": id,
+        "value": value,
         "location": location,
         "lat": lat,
         "lng": lng
@@ -19,26 +19,26 @@ function addRecent(service, id, value, location, lat, lng){
 
         if (config["history"][i] !== undefined) {
             if (config["history"][i].key === key) {
-                config["history"].splice(i,1);
+                config["history"].splice(i, 1);
             }
         }
     }
     config["history"].unshift(obj);
-    if(config["history"].length > 15){
+    if (config["history"].length > 15) {
         config["history"].pop();
     }
     saveConfig();
 }
 
-function failLocations(){
+function failLocations() {
     $("#locations").html("<header>Locaties</header><ul><li><p>" + $.t('error.serverUnreachable') + "</p></li></ul>");
 }
 
 function getLocations(searchStr) {
     showHistory();
-    if(true) {
+    if (true) {
         locations = $("#locations");
-        if(searchStr.length >= 3){
+        if (searchStr.length >= 3) {
             locations.html("<header>Locaties</header><center><progress class=\"bigger\" style=\"margin-top:10%;\"/></center>");
             url = "http://www.belgianrail.be/jp/sncb-nmbs-routeplanner/ajax-getstop.exe/" + language.charAt(0) + "n" + "?S=" + searchStr;
             $.ajax({
@@ -46,17 +46,14 @@ function getLocations(searchStr) {
                 url: url,
                 success: successLocations,
                 error: failLocations,
-                crossDomain : true
+                crossDomain: true
             });
-        }
-        else if(searchStr.length > 0) {
+        } else if (searchStr.length > 0) {
             locations.html("<header>Locaties</header><ul><li><p>" + $.t('error.searchTooShort') + "</p></li></ul>");
-        }
-        else {
+        } else {
             locations.html('');
         }
-    }
-    else {
+    } else {
         var dialog = UI.dialog("errorDialog").show();
         $("#errMsg").html("<li>" + $.t('error.turnOnDataWifi') + "</li>");
     }
@@ -144,7 +141,7 @@ function restoreDefault() {
     saveConfig();
 }
 
-function saveConfig(){
+function saveConfig() {
     try {
         localStorage.setItem("configV" + cnfgNr, JSON.stringify(config));
     } catch (e) {
@@ -156,7 +153,7 @@ function saveConfig(){
     }
 }
 
-function searchStation(clicked){
+function searchStation(clicked) {
     lastClicked = clicked;
     document.getElementById("location").value = document.getElementById(lastClicked).value;
     getLocations(document.getElementById("location").value);
@@ -165,12 +162,12 @@ function searchStation(clicked){
     //document.getElementById("location").focus();
 }
 
-function showHistory(){
+function showHistory() {
 
     var sugLnt = config["history"].length;
     var result = "";
-    if (sugLnt > 0){
-        for(var i = 0; i < sugLnt; i ++){
+    if (sugLnt > 0) {
+        for (var i = 0; i < sugLnt; i++) {
             if (config["history"][i]["service"] != 'undefined' && config["history"][i]["location"] != 'undefined') {
                 result += "<li><a class=\"locationResult\""
                 result += " data-service=\"" + config["history"][i]["service"] + "\""
@@ -182,15 +179,14 @@ function showHistory(){
                 result += " href=\"#\"><aside><img alt=\"logo\" src=\"icons/" + config["history"][i]["service"] + "@8.png\"></aside><p>" + config["history"][i]["location"] + "</p></a></li>"
             }
         }
-    }
-    else {
+    } else {
         result = "<li><p>" + $.t('error.noRecentLocations') + "</p></li>";
     }
 
     document.getElementById("locationsHistory").innerHTML = "<header>" + $.t('general.recentLocations') + "</header><ul>" + result + "</ul>";
 }
 
-function successLocations( data ){
+function successLocations(data) {
     // get all the sugestions
     eval(data);
 }
@@ -198,7 +194,7 @@ function successLocations( data ){
 // Oject to catch the responce
 // catch sugestions for locationsearch
 var SLs = {
-    showSuggestion:function(){
+    showSuggestion: function() {
         var suggestedLocations = SLs.sls.suggestions;
         var incDeLijn = document.getElementById("DeLijn");
         var incNMBS = document.getElementById("NMBS");
@@ -206,45 +202,46 @@ var SLs = {
         var incTEC = document.getElementById("TEC");
         var oLength = suggestedLocations.length;
         var result = "";
-        for (var i = 0; i < oLength; i++){
+        for (var i = 0; i < oLength; i++) {
             var rgx = /(.*)\s\[(.*)\]/g;
             var rgxResult = rgx.exec(suggestedLocations[i].value);
             lnglat = " data-lat=\"" + suggestedLocations[i].ycoord / 1000000 + "\" data-lng=\"" + suggestedLocations[i].xcoord / 1000000 + "\" ";
-            if (rgxResult != null){
-                switch (rgxResult[2]){
+            if (rgxResult != null) {
+                switch (rgxResult[2]) {
                     case "De Lijn":
-                        if(incDeLijn.checked){
-                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"delijn\" " + lnglat + " data-location=\"" + rgxResult[1] + "\" href=\"#\"><aside><img alt=\"logo\" src=\"icons/delijn@8.png\"></aside><p>"+rgxResult[1]+"</p></a></li>"
+                        if (incDeLijn.checked) {
+                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"delijn\" " + lnglat + " data-location=\"" + rgxResult[1] + "\" href=\"#\"><aside><img alt=\"logo\" src=\"icons/delijn@8.png\"></aside><p>" + rgxResult[1] + "</p></a></li>"
                         }
                         break;
                     case "MIVB":
                     case "STIB/MIVB":
-                        if(incMIVB.checked){
-                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"mivb\" " + lnglat + " data-location=\"" + rgxResult[1] + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/mivb@8.png\"></aside><p>"+rgxResult[1]+"</p></a></li>"
+                        if (incMIVB.checked) {
+                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"mivb\" " + lnglat + " data-location=\"" + rgxResult[1] + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/mivb@8.png\"></aside><p>" + rgxResult[1] + "</p></a></li>"
                         }
                         break;
                     case "TEC":
-                        if(incTEC.checked){
-                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"tec\" " + lnglat + " data-location=\"" + rgxResult[1] + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/tec@8.png\"></aside><p>"+rgxResult[1]+"</p></a></li>"
+                        if (incTEC.checked) {
+                            result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"tec\" " + lnglat + " data-location=\"" + rgxResult[1] + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/tec@8.png\"></aside><p>" + rgxResult[1] + "</p></a></li>"
                         }
                         break;
 
                 }
             } else {
-                if(incNMBS.checked){
-                    result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"nmbs\" " + lnglat + " data-location=\"" + suggestedLocations[i].value + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/nmbs@8.png\"></aside><p>"+suggestedLocations[i].value+"</p></a></li>"
+                if (incNMBS.checked) {
+                    result += "<li><a class=\"locationResult\" data-value=\"" + suggestedLocations[i].value + "\" data-id=\"" + suggestedLocations[i].id + "\" data-service=\"nmbs\" " + lnglat + " data-location=\"" + suggestedLocations[i].value + "\"href=\"#\"><aside><img alt=\"logo\" src=\"icons/nmbs@8.png\"></aside><p>" + suggestedLocations[i].value + "</p></a></li>"
                 }
             }
         }
-        if (result == ""){
+        if (result == "") {
             result = "<li><p>" + $.t('error.noResultsFound') + "</p></li>"
         }
 
         document.getElementById("locations").innerHTML = "<header>" + $.t('general.locations') + "</header><ul>" + result + "</ul>";
     }
 };
+
 function getRoutes() {
-    if(true) {
+    if (true) {
         console.log($("#from").data())
         data = "queryPageDisplayed=no";
         data += "&REQ0JourneyStopsS0G=" + escape($("#from").data('value'));
@@ -257,7 +254,7 @@ function getRoutes() {
         data += "&REQ0JourneyTime=" + escape($("#timefield").val());
         data += "&start=Dienstregeling";
         console.log(data);
-        switch(language) {
+        switch (language) {
             case 'nl':
                 data += "&start=Dienstregeling";
                 break;
@@ -280,7 +277,7 @@ function getRoutes() {
         data += "&REQ0JourneyProduct_prod_list=" + escape("1:0111111111111111");
 
         //defaults for walking and stuf
-        data +="&REQ0JourneyDep_Foot_enable%3D1%26REQ0JourneyDest_Foot_enable=1&existIntermodalDep_enable=yes&existIntermodalDest_enable=yes&REQ0JourneyDep_Foot_minDist=0&REQ0JourneyDep_Foot_maxDist=2000&REQ0JourneyDep_Foot_speed=85&REQ0JourneyDep_Bike_minDist=0&REQ0JourneyDep_Bike_maxDist=5000&REQ0JourneyDep_Taxi_minDist=2000&REQ0JourneyDep_Taxi_maxDist=50000";
+        data += "&REQ0JourneyDep_Foot_enable%3D1%26REQ0JourneyDest_Foot_enable=1&existIntermodalDep_enable=yes&existIntermodalDest_enable=yes&REQ0JourneyDep_Foot_minDist=0&REQ0JourneyDep_Foot_maxDist=2000&REQ0JourneyDep_Foot_speed=85&REQ0JourneyDep_Bike_minDist=0&REQ0JourneyDep_Bike_maxDist=5000&REQ0JourneyDep_Taxi_minDist=2000&REQ0JourneyDep_Taxi_maxDist=50000";
         if (data != lastcall) {
             lastcall = data;
             url = "http://www.belgianrail.be/jp/nmbs-routeplanner/query.exe/" + language.charAt(0) + "n";
@@ -293,17 +290,16 @@ function getRoutes() {
                 contentType: " text/plain; charset=UTF-8",
                 data: data
             });
-        }
-        else {
+        } else {
             successRoutes(lastcallData);
         }
-    }
-    else {
+    } else {
         UI.pagestack.pop();
         var dialog = UI.dialog("errorDialog").show();
         $("#errMsg").html("<li>" + $.t('error.turnOnDataWifi') + "</li>");
     }
 }
+
 function successRoutes(data) {
     lastcallData = data;
     var cnt = 0;
@@ -312,13 +308,12 @@ function successRoutes(data) {
     var rgx = /(<table\sclass="resultTable"[\s\S]+\/table>)/mg
     var rgxResult = rgx.exec(data);
     $table = $('<div></div>').html(rgxResult[0]);
-    $table.find('tbody').each(function(item){
+    $table.find('tbody').each(function(item) {
         var $this = $(this);
-        var date =$this.find('.separatorSmallDateLine');
+        var date = $this.find('.separatorSmallDateLine');
         if (date.length != 0) {
             listItems += '<li class="routeHeader"><strong>' + date.text() + '</strong></li>';
-        }
-        else {
+        } else {
             var departureTime = $this.find('.planed.overviewDep').text().substring(0, 6);
             var arivalTime = $this.find('.planed.overviewDep + .planed').text().substring(0, 6);
             var travelTime = $this.find('.duration').text();
@@ -358,11 +353,13 @@ function successRoutes(data) {
 
     $('#resultsList').html(listItems);
 }
+
 function failRoutes() {
     lastcall = new Date();
     lastcallData = "";
     $("#resultsList").html("<li><p>" + $.t('error.somethingWentWrong') + "</p></li>");
 }
+
 function getTravelTime(str) {
     var ret = {};
     var ans = "";
@@ -377,26 +374,28 @@ function getTravelTime(str) {
     }
 
     if (ret['D'] != 0) {
-        ans += ret['D'] +"D ";
+        ans += ret['D'] + "D ";
     }
     if (ret['H'] != 0) {
-        ans += ret['H'] +"H ";
+        ans += ret['H'] + "H ";
     }
-    ans += ret['M'] +"Min";
+    ans += ret['M'] + "Min";
     return ans;
 }
+
 function getStepTime(str) {
     var ret = {};
     var re = /T(\d\d:\d\d)/;
     var match = re.exec(str);
     return match[1];
 }
+
 function showRoute(data) {
     var rgx = /(\<\!--\sRSPEAK_START[\s\S]+RSPEAK_STOP\s-->)/mg
     var match = rgx.exec(data);
     var res = $('<div></div>').html(match[1]);
     var html = "";
-    res.find('p').each(function(item){
+    res.find('p').each(function(item) {
         var item = $('<li>');
         item.addClass('routeStep');
         item.html('<p>' + this.outerText + '</p>');
@@ -408,31 +407,32 @@ function showRoute(data) {
 
     $('#routeDetailList').html(html);
 }
+
 function failRoute() {
     var dialog = UI.dialog("errorDialog").show();
     $("#errMsg").html("<li>" + $.t('error.somethingWentWrong') + "</li>");
 }
 
-function formatTweets(tweets){
+function formatTweets(tweets) {
     var x = tweets.length;
     var n = 0;
     var element = document.getElementById('twitterFeed');
     var html = '';
-    while(n < x) {
+    while (n < x) {
         tweet = $('<div></div>').html(tweets[n]);
         html += '<li>';
-        if(tweet.find('.user').text().indexOf('@NMBS') !== -1){
+        if (tweet.find('.user').text().indexOf('@NMBS') !== -1) {
             html += '<aside><img src="icons/nmbs@8.png"></img></aside>';
         }
-        if(tweet.find('.user').text().indexOf('@delijn') !== -1){
+        if (tweet.find('.user').text().indexOf('@delijn') !== -1) {
             html += '<aside><img src="icons/delijn@8.png"></img></aside>';
         }
-        if(tweet.find('.user').text().indexOf('@STIBMIVB') !== -1){
+        if (tweet.find('.user').text().indexOf('@STIBMIVB') !== -1) {
             html += '<aside><img src="icons/mivb@8.png"></img></aside>';
         }
 
 
-        html += '<p>' + tweet.find('.tweet').text().replace(/#(\S*)/g,'<strong>#$1&nbsp;</strong>') + '</p>';
+        html += '<p>' + tweet.find('.tweet').text().replace(/#(\S*)/g, '<strong>#$1&nbsp;</strong>') + '</p>';
         html += '</li>';
         n++;
     }
@@ -441,16 +441,14 @@ function formatTweets(tweets){
 }
 
 function getTweets() {
-    if(true) {
+    if (true) {
         $('#twitterFeed').html("<center><progress class=\"bigger\" style=\"margin-top:10%;\"/></center>");
         if (twitterID != "") {
             twitterFetcher.fetch(twitterID, 'twitterFeed', 10, false, true, true, '', false, formatTweets, false);
-        }
-        else {
+        } else {
             $('#twitterFeed').html("<p>" + $.t('error.noTwitterAccountsForServices') + "</p>");
         }
-    }
-    else {
+    } else {
         $('#twitterFeed').html("<li><p>" + $.t('error.turnOnDataWifi') + "</p></li>");
     }
 }
@@ -478,24 +476,26 @@ function setTwitterId() {
             twitterID = "452569886921732096";
             break;
         case 100:
-          twitterID = "454002635406729216";
-          break;
+            twitterID = "454002635406729216";
+            break;
         case 101:
-          twitterID = "453993942791360512";
-          break;
+            twitterID = "453993942791360512";
+            break;
         case 110:
-          twitterID = "454002477973504000";
-          break;
+            twitterID = "454002477973504000";
+            break;
         case 111:
-          twitterID = "454001524448829440";
-          break;
+            twitterID = "454001524448829440";
+            break;
     }
     getTweets();
 }
+
 function onResize() {
     // breaks scrolling on phone
     //$('#twitterFeed').height($(window).height() - 250);
 }
+
 function getRouteDetail() {
     UI.pagestack.push("routeDetail-page");
     $('#routeDetailList').html("<center><progress class=\"bigger\" style=\"margin-top:10%;\"/></center>");
@@ -506,17 +506,19 @@ function getRouteDetail() {
         error: failRoute
     });
 }
+
 function translateHeaders() {
     $("#location-page").data('title', $.t('headers.location'));
     $("#datetime-page").data('title', $.t('headers.datetime'));
     $("#results-page").data('title', $.t('headers.results'));
     $("#routeDetail-page").data('title', $.t('headers.routeDetail'));
     // fix because it doesn't work elsewise
-    UI.pagestack.onPageChanged(function(event){
+    UI.pagestack.onPageChanged(function(event) {
         $("li[data-role='tabitem']").text($("#" + event.page).data('title'));
     });
 }
-function languageSelection(){
+
+function languageSelection() {
     var dialog = UI.dialog("languageDialog").show();
     var data = '<section>';
     data += '<button data-role="button" class="selectLanguage" data-language="nl" >Selecteer uw taal</button>';
@@ -526,7 +528,8 @@ function languageSelection(){
     data += '</section>';
     $("#languageDialog").html(data);
 }
-function initLanguage(){
+
+function initLanguage() {
     scrollOpt = {
         "date": {
             animate: false,
@@ -556,7 +559,10 @@ function initLanguage(){
     languageNMBS = config['languageNMBS'];
 
     // language strings
-    $.i18n.init({ resStore: LANG, lng: language });
+    $.i18n.init({
+        resStore: LANG,
+        lng: language
+    });
     $("#langContext").i18n();
     translateHeaders();
     UI.dialog("languageDialog").hide();

@@ -15,12 +15,12 @@ var language = "nl";
 var currDate = new Date();
 var scrollOpt;
 
-$( document ).ready(function() {
+$(document).ready(function() {
     onResize();
     $(window).bind('resize', onResize);
     // init Ubuntu UI
     UI.init();
-    UI.pagestack.push('search-page')
+    UI.pagestack.push('search-page');
     UI.optionselector("timeWhen");
     //checking for saved config
     if (localStorage.getItem("configV" + cnfgNr) === null) {
@@ -31,10 +31,9 @@ $( document ).ready(function() {
     }
     config = JSON.parse(localStorage.getItem("configV" + cnfgNr));
 
-    if (config['language'] === undefined ) {
+    if (config['language'] === undefined) {
         languageSelection();
-    }
-    else {
+    } else {
         initLanguage();
     }
 
@@ -43,7 +42,7 @@ $( document ).ready(function() {
     // Event listeners
     $("#location").on(
         "input",
-        function(){
+        function() {
             getLocations($("#location").val());
         }
     );
@@ -79,9 +78,9 @@ $( document ).ready(function() {
 
     $(".locationsList").on(
         "click",
-        function(e){
+        function(e) {
             var locationResult = $(e.target).closest(".locationResult");
-            if(locationResult != null && locationResult.data("value") != 'undefined') {
+            if (locationResult !== null && locationResult.data("value") != 'undefined') {
                 targetElement = $('#' + lastClicked);
                 targetElement.val(locationResult.data("location"));
                 $("#" + lastClicked + "Logo").attr("src", "icons/" + locationResult.data("service") + "@8.png");
@@ -141,15 +140,14 @@ $( document ).ready(function() {
 
     $("#timeanddate").on(
         "click",
-        function(e){
+        function(e) {
             $errMsg = "";
-            if ($("#from").val() === ""){
+            if ($("#from").val() === "") {
                 $errMsg += "<li>" + $.t('error.noDepartureLocation') + "</li>"
             }
-            if ($("#to").val() === ""){
+            if ($("#to").val() === "") {
                 $errMsg += "<li>" + $.t('error.noArrivalLocation') + "</li>"
-            }
-            else {
+            } else {
                 if ($("#to").val() == $("#from").val()) {
                     $errMsg += "<li>" + $.t('error.departuraAndArrivalTheSame') + "</li>"
                 }
@@ -159,10 +157,9 @@ $( document ).ready(function() {
                 $errMsg += "<li>" + $.t('error.noServicesSelected') + "</li>"
             }
 
-            if ($errMsg === ""){
+            if ($errMsg === "") {
                 UI.pagestack.push("datetime-page")
-            }
-            else{
+            } else {
                 var dialog = UI.dialog("errorDialog").show();
                 $("#errMsg").html($errMsg);
             }
@@ -170,20 +167,19 @@ $( document ).ready(function() {
     );
     $("#lookup").on(
         "click",
-        function(e){
+        function(e) {
             $('#resultsList').html("<center><progress class=\"bigger\" style=\"margin-top:10%;\"/></center>");
             $errMsg = "";
-            if ($("#timefield").val() === ""){
+            if ($("#timefield").val() === "") {
                 $errMsg += "<li>" + $.t('error.noTime') + "</li>"
             }
-            if ($("#datefield").val() === ""){
+            if ($("#datefield").val() === "") {
                 $errMsg += "<li>" + $.t('error.noDate') + "</li>"
             }
-            if ($errMsg === ""){
+            if ($errMsg === "") {
                 getRoutes();
                 UI.pagestack.push("results-page")
-            }
-            else{
+            } else {
                 var dialog = UI.dialog("errorDialog").show();
                 $("#errMsg").html($errMsg);
             }
@@ -192,14 +188,14 @@ $( document ).ready(function() {
     );
     $("#errOk").on(
         "click",
-        function(e){
+        function(e) {
             var dialog = UI.dialog("errorDialog").hide();
         }
     );
     $("#languageDialog").delegate(
         ".selectLanguage",
         "click",
-        function(event){
+        function(event) {
             $target = $(event.target);
             language = $target.data('language');
             config['language'] = language;
@@ -208,7 +204,7 @@ $( document ).ready(function() {
         }
     );
     $("#appHeader").delegate('#languageSelection', 'click', languageSelection);
-    $("#appHeader").delegate('#twitterLink', 'click', function(e){
+    $("#appHeader").delegate('#twitterLink', 'click', function(e) {
         UI.pagestack.push("twitter-page");
     });
 });
