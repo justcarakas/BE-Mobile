@@ -242,7 +242,6 @@ var SLs = {
 
 function getRoutes() {
     if (true) {
-        console.log($("#from").data())
         data = "queryPageDisplayed=no";
         data += "&REQ0JourneyStopsS0G=" + escape($("#from").data('value'));
         data += "&REQ0JourneyStopsS0ID=" + escape($("#from").data('id'));
@@ -253,7 +252,6 @@ function getRoutes() {
         data += "&wDayExt0=" + escape("Ma|Di|Wo|Do|Vr|Za|Zo");
         data += "&REQ0JourneyTime=" + escape($("#timefield").val());
         data += "&start=Dienstregeling";
-        console.log(data);
         switch (language) {
             case 'nl':
                 data += "&start=Dienstregeling";
@@ -318,9 +316,6 @@ function successRoutes(data) {
             var arivalTime = $this.find('.planed.overviewDep + .planed').text().substring(0, 6);
             var travelTime = $this.find('.duration').text();
             var transfers = $this.find('.changes').text();
-            var detailUrl = $this.find('a.dtlTab').attr('href');
-            detailUrl += "HWAI=CONNECTION$C0-0!id=C0-0!journeyMode=OUTWARD!option=detailContainer!detailContainer=dtlTab!moreDetails=conMap!&hwaiID=C0-0&ajax=1";
-            console.log(detailUrl);
             var dtlTab = $this.find('a.dtlTab');
             var detailUrl = dtlTab.attr('href');
             var rel = dtlTab.attr('rel');
@@ -332,11 +327,8 @@ function successRoutes(data) {
                 rel = rel.replaceAll('}', '!');
                 var expression = /CONNECTION\$(.*?)!/g;
                 rgxID = expression.exec(rel);
-                console.log(rgxID)
                 detailUrl += rel + "&hwaiID=" + rgxID[1] + "&ajax=1";
-                console.log(detailUrl);
             }
-            console.log('___________________')
             if (arivalTime.length > 0 && departureTime.length > 0) {
                 listItems += "<li class=\"routeOptions\"><a data-url=\"" + detailUrl + "\"href =\"#\">";
                 listItems += "<div><strong>" + departureTime + "</strong><span>" + $.t('general.traveltime') + ": " + travelTime + "</span></div>";

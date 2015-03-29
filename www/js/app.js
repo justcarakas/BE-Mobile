@@ -47,7 +47,7 @@ $(document).ready(function() {
         }
     );
 
-    $("ul#pathLocations").delegate("input", "click", function(e) {
+    $("ul#pathLocations").on("click", "input", function(e) {
         if (!$("#DeLijn").attr("checked") && !$("#NMBS").attr("checked") && !$("#MIVB").attr("checked") && !$("#TEC").attr("checked")) {
             $errMsg = "<li>" + $.t('error.noServicesSelected') + "</li>"
             var dialog = UI.dialog("errorDialog").show();
@@ -57,20 +57,13 @@ $(document).ready(function() {
         }
     });
 
-    // @TODO fix this
-    $("ul#pathLocations").delegate("input", "search", function(e) {
-        if (this.value === '') {
-            $("#" + this.id + "Logo").attr("src", "icons/noService@8.png");
-        }
-    });
-
-    $("ul#serviceProviders").delegate("input", "change", function(e) {
+    $("ul#serviceProviders").on("change", "input", function(e) {
         config["settings"]["service"][e.target.id] = e.target.checked;
         saveConfig();
         setTwitterId();
     });
 
-    $("#resultsList").delegate("a", "click", function(e) {
+    $("#resultsList").on("click", "a", function(e) {
         selectedRoute = $(this).data('url');
         $('#routeDetailList').html("<center><progress class=\"bigger\" style=\"margin-top:10%;\"/></center>");
         getRouteDetail();
@@ -192,9 +185,9 @@ $(document).ready(function() {
             var dialog = UI.dialog("errorDialog").hide();
         }
     );
-    $("#languageDialog").delegate(
-        ".selectLanguage",
+    $("#languageDialog").on(
         "click",
+        ".selectLanguage",
         function(event) {
             $target = $(event.target);
             language = $target.data('language');
@@ -203,8 +196,8 @@ $(document).ready(function() {
             initLanguage();
         }
     );
-    $("#appHeader").delegate('#languageSelection', 'click', languageSelection);
-    $("#appHeader").delegate('#twitterLink', 'click', function(e) {
+    $("#appHeader").on('click', '#languageSelection', languageSelection);
+    $("#appHeader").on('click', '#twitterLink', function(e) {
         UI.pagestack.push("twitter-page");
     });
 });
